@@ -1,23 +1,21 @@
 package com.example.musikasten
+
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.musikasten.ui.theme.MusikastenTheme
-import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.musikasten.ui.theme.MusikastenTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +23,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             MusikastenTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LoginScreen(modifier = Modifier.padding(innerPadding))
+                    LoginScreen(
+                        modifier = Modifier.padding(innerPadding),
+                        onLoginSuccess = {
+                            // Navega para MusicListActivity
+                            val intent = Intent(this, MusicListActivity::class.java)
+                            startActivity(intent)
+                            finish() // Finaliza a MainActivity para evitar voltar nela
+                        }
+                    )
                 }
             }
         }
@@ -33,17 +39,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier){
-    var username by remember { mutableStateOf("")}
-    var password by remember { mutableStateOf("")}
+fun LoginScreen(modifier: Modifier = Modifier, onLoginSuccess: () -> Unit) {
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
-    Column (
-        modifier = Modifier
+    Column(
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center
-    ){
-        // Campo de texto para o usuário
+    ) {
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
@@ -63,18 +68,13 @@ fun LoginScreen(modifier: Modifier = Modifier){
         Spacer(modifier = Modifier.height(32.dp))
 
         Button(
-            onClick = { /* Ação de login */ },
+            onClick = {
+                // Chama a função que navega para a próxima Activity
+                onLoginSuccess()
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Entrar")
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    MusikastenTheme {
-        LoginScreen()
     }
 }

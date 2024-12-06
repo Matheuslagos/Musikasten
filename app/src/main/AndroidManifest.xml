@@ -23,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MusicListActivity"
+            android:exported="true"
+            android:label="lista de musicas"
+            />
     </application>
 
 </manifest>
