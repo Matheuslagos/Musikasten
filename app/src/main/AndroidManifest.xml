@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Musikasten"
         tools:targetApi="31">
+
+        <!-- MainActivity é a activity principal -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -19,14 +21,22 @@
             android:theme="@style/Theme.Musikasten">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MusicListActivity"
+
+        <!-- MusicListActivity (tela de lista de músicas) -->
+        <activity
+            android:name=".MusicListActivity"
             android:exported="true"
-            android:label="lista de musicas"
-            />
+            android:label="Lista de Músicas" />
+
+        <!-- RegisterActivity (tela de registro) -->
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true"
+            android:label="Cadastro" />
+
     </application>
 
 </manifest>
